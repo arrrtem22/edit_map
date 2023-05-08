@@ -11,8 +11,6 @@ import 'package:edit_map/src/src/models/graphic/base_graphic.dart';
 import 'package:edit_map/src/src/models/graphic/desk/desk_values.dart';
 import 'package:edit_map/src/src/models/graphic/office_map.dart';
 
-import 'skia_office_map.dart';
-
 export 'package:edit_map/src/src/models/graphic/params/desk_params.dart';
 
 const logsEnabled = true;
@@ -23,7 +21,7 @@ const double draggableDeskPadding = 50;
 /// Size of icon that a user sees in edit mode with draggable desk.
 const fourDirectionArrowIconSize = Size(18, 18);
 
-class SkiaOfficeMap extends StatefulWidget {
+class EditMap extends StatefulWidget {
   final File mapImage;
 
   /// It can be a draggable desk (in edit mode) also it can be just selected
@@ -36,7 +34,7 @@ class SkiaOfficeMap extends StatefulWidget {
   final void Function(Offset offset)? onDeskMoved;
   final void Function(DeskPayload? deskParams)? onObjectSelected;
 
-  const SkiaOfficeMap({
+  const EditMap({
     Key? key,
     required this.mapImage,
     required this.deskParamsList,
@@ -49,10 +47,10 @@ class SkiaOfficeMap extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SkiaOfficeMapState createState() => _SkiaOfficeMapState();
+  _EditMapState createState() => _EditMapState();
 }
 
-class _SkiaOfficeMapState extends State<SkiaOfficeMap>
+class _EditMapState extends State<EditMap>
     with TickerProviderStateMixin {
   static const DeskBuilder deskBuilder = DeskBuilder();
   final GlobalKey interactiveViewerKey = GlobalKey();
@@ -113,7 +111,7 @@ class _SkiaOfficeMapState extends State<SkiaOfficeMap>
   }
 
   @override
-  void didUpdateWidget(SkiaOfficeMap oldWidget) {
+  void didUpdateWidget(EditMap oldWidget) {
     if (widget.isEditMode) {
       if (oldWidget.selectedDesk == null && widget.selectedDesk != null) {
         animateResetInitialize();
@@ -146,12 +144,12 @@ class _SkiaOfficeMapState extends State<SkiaOfficeMap>
   Widget build(BuildContext context) {
     if (officeMap == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
+        final Size size = context.size!;
         final codec =
             await ui.instantiateImageCodec(await widget.mapImage.readAsBytes());
         final mapImage = (await codec.getNextFrame()).image;
         final int imageHeight = mapImage.height;
         final int imageWidth = mapImage.width;
-        final Size size = context.size!;
 
         // Start the first render, start the scene centered in the viewport.
         _homeMatrix ??= transformationController.value;
@@ -255,7 +253,7 @@ class _SkiaOfficeMapState extends State<SkiaOfficeMap>
                       top: draggableDeskPosition.dy,
                       child: Draggable(
                         onDragEnd: (dragDetails) {
-                          onDeskMoved(dragDetails.offset);
+                          onDeskMoved(dragDetails.offset, needToSetState: true);
                         },
                         feedback: deskWidget,
                         child: deskWidget,
@@ -297,7 +295,7 @@ class _SkiaOfficeMapState extends State<SkiaOfficeMap>
     return transformationController.toScene(offset);
   }
 
-  void onDeskMoved(Offset offset) {
+  void onDeskMoved(Offset offset, {bool needToSetState = false}) {
     final deskTopLeftPoint = convertOffset(
         offset + const Offset(draggableDeskPadding, draggableDeskPadding));
     final deskInDraggableWrapperTopLeftPoint = convertOffset(offset);
@@ -306,13 +304,12 @@ class _SkiaOfficeMapState extends State<SkiaOfficeMap>
         deskTopLeftPoint.dy < officeMap!.mapImage!.height * officeMap!.ratio &&
         deskTopLeftPoint.dx > 0 &&
         deskTopLeftPoint.dx < officeMap!.mapImage!.width * officeMap!.ratio) {
-      setState(() {
-        _print('x: ${deskTopLeftPoint.dx}');
-        _print('y: ${deskTopLeftPoint.dy}');
-        draggableDeskPosition = deskInDraggableWrapperTopLeftPoint;
-        widget.onDeskMoved?.call(Offset(deskTopLeftPoint.dx / officeMap!.ratio,
-            deskTopLeftPoint.dy / officeMap!.ratio));
-      });
+      _print('x: ${deskTopLeftPoint.dx}');
+      _print('y: ${deskTopLeftPoint.dy}');
+      draggableDeskPosition = deskInDraggableWrapperTopLeftPoint;
+      widget.onDeskMoved?.call(Offset(deskTopLeftPoint.dx / officeMap!.ratio,
+          deskTopLeftPoint.dy / officeMap!.ratio));
+      if (needToSetState) setState(() {});
     }
   }
 

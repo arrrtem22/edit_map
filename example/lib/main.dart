@@ -96,11 +96,8 @@ class _MyHomeViewState extends State<_MyHomeView> {
                 isDraggableDeskShown = false;
               });
             },
-            child: const AspectRatio(
-              aspectRatio: 1,
-              child: Center(
-                child: Icon(Icons.done),
-              ),
+            child: const Center(
+              child: Text('Save'),
             ),
           ),
           InkWell(
@@ -122,7 +119,7 @@ class _MyHomeViewState extends State<_MyHomeView> {
         ],
       ),
       body: SizedBox.expand(
-        child: SkiaOfficeMap(
+        child: EditMap(
           isEditMode: true,
           mapImage: widget.mapImageFile,
           deskParamsList: desks,
@@ -132,13 +129,15 @@ class _MyHomeViewState extends State<_MyHomeView> {
           onDeskMoved: (Offset deskPosition) {
             print(
                 '---desk moved---\nx:${deskPosition.dx}\ny:${deskPosition.dy}');
-            setState(() {
-              lastModifiedObject = DeskPayload(
-                deskParams: DeskParams(
-                  id: (++index).toString(),
-                  area: Area(position: deskPosition),
-                ),
-              );
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              setState(() {
+                lastModifiedObject = DeskPayload(
+                  deskParams: DeskParams(
+                    id: (++index).toString(),
+                    area: Area(position: deskPosition),
+                  ),
+                );
+              });
             });
           },
         ),

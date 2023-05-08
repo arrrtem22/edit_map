@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:edit_map/src/skia_office_map.dart';
+import 'package:edit_map/src/edit_map.dart';
 import 'package:edit_map/src/src/factories/desk/desk_chair_factory.dart';
 import 'package:edit_map/src/src/factories/desk/tabletop_factory.dart';
 import 'package:edit_map/src/src/interfaces/graphic/chair_interface.dart';
@@ -8,6 +7,7 @@ import 'package:edit_map/src/src/interfaces/graphic/object_interface.dart';
 import 'package:edit_map/src/src/map_values.dart';
 import 'package:edit_map/src/src/models/graphic/desk/desk.dart';
 import 'package:edit_map/src/src/models/graphic/desk/desk_values.dart';
+import 'package:flutter/material.dart';
 
 class DeskBuilder {
   final TabletopFactory tabletopFactory = const TabletopFactory();
