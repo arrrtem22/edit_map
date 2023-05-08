@@ -1,18 +1,13 @@
 name: edit_map
 description: The map which allows your users to interact with 2D objects.
-version: 0.0.1
 homepage: https://pub.dev/packages/edit_map
-
-environment:
-  sdk: '>=2.19.6 <3.0.0'
-  flutter: ">=2.5.0"
+repository: https://github.com/arrrtem22/edit_map/
+issue_tracker: https://github.com/arrrtem22/edit_map/issues
+version: 0.0.1
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_web_plugins:
-    sdk: flutter
-  plugin_platform_interface: ^2.0.2
   equatable: ^2.0.5
 
 dev_dependencies:
@@ -20,20 +15,6 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^2.0.0
 
-flutter:
-  plugin:
-    platforms:
-      android:
-        package: oliin.apps.edit_map
-        pluginClass: EditMapPlugin
-      ios:
-        pluginClass: EditMapPlugin
-      linux:
-        pluginClass: EditMapPlugin
-      macos:
-        pluginClass: EditMapPlugin
-      windows:
-        pluginClass: EditMapPluginCApi
-      web:
-        pluginClass: EditMapWeb
-        fileName: edit_map_web.dart
+environment:
+  sdk: '>=2.19.0-0 <4.0.0'
+  flutter: ">=2.5.0"

@@ -6,9 +6,6 @@
 
 #include "generated_plugin_registrant.h"
 
-#include <edit_map/edit_map_plugin_c_api.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
-  EditMapPluginCApiRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("EditMapPluginCApi"));
 }
