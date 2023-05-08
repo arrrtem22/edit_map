@@ -1,5 +1,3 @@
-
-
 // class ChairFactory
 //     implements
 //         GraphicFactoryInterface<AssetRepresentationInterface, AssetTypeEnum,
