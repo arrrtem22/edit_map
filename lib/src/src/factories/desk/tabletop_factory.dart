@@ -17,7 +17,7 @@ class TabletopFactory
     TabletopInterface tabletop;
     switch (type) {
       case DeskTypeEnum.common:
-      // case DeskTypeEnum.commonHorizontal:
+        // case DeskTypeEnum.commonHorizontal:
         tabletop = TabletopCommon(params);
         break;
       // case DeskTypeEnum.large:

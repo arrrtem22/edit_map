@@ -38,7 +38,8 @@ const DeskState bookedDeskState = DeskState(
 );
 
 const DeskState activeDeskState = DeskState(
-  fillColor: activeBorderColor, // it's an active color only for mobile TODO(Artemii): clarify this color with Eugene
+  fillColor:
+      activeBorderColor, // it's an active color only for mobile TODO(Artemii): clarify this color with Eugene
   // nameStrokeColor: whiteColor,
   borderColor: activeBorderColor,
   // nameStrokeWidth: 1,

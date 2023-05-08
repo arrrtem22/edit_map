@@ -50,8 +50,7 @@ class EditMap extends StatefulWidget {
   EditMapState createState() => EditMapState();
 }
 
-class EditMapState extends State<EditMap>
-    with TickerProviderStateMixin {
+class EditMapState extends State<EditMap> with TickerProviderStateMixin {
   static const DeskBuilder deskBuilder = DeskBuilder();
   final GlobalKey interactiveViewerKey = GlobalKey();
   final GlobalKey stackKey = GlobalKey();

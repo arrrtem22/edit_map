@@ -40,8 +40,7 @@ class ChairDesk implements ChairInterface {
     final chairY = y + commonTabletopSize.height + 2;
 
     RRect tabletopShape = RRect.fromRectAndCorners(
-      Offset(chairX, chairY) &
-      deskChairSize,
+      Offset(chairX, chairY) & deskChairSize,
       bottomLeft: const Radius.circular(deskBorderRadius),
       bottomRight: const Radius.circular(deskBorderRadius),
     );
