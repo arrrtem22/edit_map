@@ -2,6 +2,7 @@ import 'dart:collection' show IterableMixin;
 import 'dart:math';
 import 'dart:ui' as ui;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:edit_map/src/src/helpers/list_extensions.dart';
 import 'package:edit_map/src/src/helpers/shape_helper.dart';
@@ -83,6 +84,7 @@ class OfficeMap extends Object with IterableMixin<BaseGraphic> {
   // }
 
   // Check if the board point is actually on the board.
+  // ignore: unused_element
   bool _validateBoardPoint(BaseGraphic boardPoint) {
     // const center = ObjectInterface(0, 0);
     // final distanceFromCenter = getDistance(center, boardPoint);
@@ -124,8 +126,10 @@ class OfficeMap extends Object with IterableMixin<BaseGraphic> {
         }
       }
     }
-    print('selected object id: ${selectedGraphic?.id ?? 'null'}');
-    print(point);
+    if (kDebugMode) {
+      print('selected object id: ${selectedGraphic?.id ?? 'null'}');
+      print(point);
+    }
     return selectedGraphic;
     // final BaseGraphic object =
     //     (_mapObjects as List<BaseGraphic?>).firstWhere((BaseGraphic? object) {

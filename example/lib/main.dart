@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:edit_map/edit_map.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -127,8 +128,10 @@ class _MyHomeViewState extends State<_MyHomeView> {
               ? DeskPayload(deskParams: const DeskParams(id: '1'))
               : null,
           onDeskMoved: (Offset deskPosition) {
-            print(
-                '---desk moved---\nx:${deskPosition.dx}\ny:${deskPosition.dy}');
+            if (kDebugMode) {
+              print(
+                  '---desk moved---\nx:${deskPosition.dx}\ny:${deskPosition.dy}');
+            }
             WidgetsBinding.instance.addPostFrameCallback((_) async {
               setState(() {
                 lastModifiedObject = DeskPayload(

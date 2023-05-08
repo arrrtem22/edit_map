@@ -47,10 +47,10 @@ class EditMap extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _EditMapState createState() => _EditMapState();
+  EditMapState createState() => EditMapState();
 }
 
-class _EditMapState extends State<EditMap>
+class EditMapState extends State<EditMap>
     with TickerProviderStateMixin {
   static const DeskBuilder deskBuilder = DeskBuilder();
   final GlobalKey interactiveViewerKey = GlobalKey();
@@ -256,8 +256,8 @@ class _EditMapState extends State<EditMap>
                           onDeskMoved(dragDetails.offset, needToSetState: true);
                         },
                         feedback: deskWidget,
-                        child: deskWidget,
                         childWhenDragging: Container(),
+                        child: deskWidget,
                       ),
                     ),
                 ],
