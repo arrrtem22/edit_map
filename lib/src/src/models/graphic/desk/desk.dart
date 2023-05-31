@@ -1,7 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:flutter/cupertino.dart';
-import 'package:edit_map/src/src/helpers/shape_helper.dart';
 import 'package:edit_map/src/src/interfaces/graphic/availability_interface.dart';
 import 'package:edit_map/src/src/interfaces/graphic/chair_interface.dart';
 import 'package:edit_map/src/src/interfaces/graphic/desk/desk_interface.dart';
@@ -11,6 +9,8 @@ import 'package:edit_map/src/src/interfaces/graphic/icon/icon_interface.dart';
 import 'package:edit_map/src/src/interfaces/graphic/object_interface.dart';
 import 'package:edit_map/src/src/map_values.dart';
 import 'package:edit_map/src/src/models/graphic/base_graphic.dart';
+import 'package:edit_map/src/src/models/graphic/desk/desk_values.dart';
+import 'package:flutter/cupertino.dart';
 
 const TextStyle deskTextStyle = TextStyle(
   fontSize: 10,
@@ -18,24 +18,21 @@ const TextStyle deskTextStyle = TextStyle(
   color: blackColor,
 );
 
-class Desk extends BaseGraphic implements DeskInterface {
-  // @override
-  // final AvailabilityInterface availability;
-
-  @override
-  final ChairInterface chair;
+class Desk extends BaseGraphic {
+  Desk(
+    String id,
+    double x,
+    double y, {
+    required double rotation,
+    required this.states,
+    required this.coordinates,
+    required this.size,
+    required this.stateType,
+    // required this.icons,
+  }) : super(id, x, y, rotation);
 
   @override
   final Offset coordinates;
-
-  // @override
-  // final DeskNameInterface deskName;
-
-  // @override
-  // final IconInterface icon;
-
-  @override
-  final bool isSimplified;
 
   @override
   final Size size;
@@ -43,84 +40,45 @@ class Desk extends BaseGraphic implements DeskInterface {
   @override
   final StateType stateType;
 
-  @override
-  final TabletopInterface tabletop;
-
-  @override
-  final DeskTypeEnum type;
-
   final Params<DeskState> states;
-
-  // final ParamsInterface<IconInterface> icons;
-
-  Desk(
-    String id,
-    double x,
-    double y, {
-    required double rotation,
-    required this.states,
-    // required this.availability,
-    required this.chair,
-    required this.coordinates,
-    // required this.deskName,
-    // required this.icon,
-    required this.isSimplified,
-    required this.size,
-    required this.stateType,
-    required this.tabletop,
-    required this.type,
-    // required this.icons,
-  }) : super(id, x, y, rotation);
-
-  @override
-  Params<IconInterface> getIcons() {
-    // TODO: implement getIcons
-    throw UnimplementedError();
-  }
-
-  @override
-  List<Offset> getRotatedShape() {
-    // saved points, static
-    final List<Offset> deskShape = getShape();
-    // top-left point
-    final tl = deskShape[0];
-    // bottom-right point
-    final br = deskShape[2];
-    final rectCenter = Offset((tl.dx + br.dx) / 2, (tl.dy + br.dy) / 2);
-    // shape points with rotation
-    return deskShape
-        .map((point) => rotatePoint(point, rectCenter, rotation))
-        .toList();
-  }
-
-  @override
-  void resetIcon(IconInterface icon) {
-    // TODO: implement resetIcon
-  }
-
-  @override
-  void setIcon(IconInterface icon) {
-    // TODO: implement setIcon
-  }
-
-  @override
-  void setIcons(Params<IconInterface> icons) {
-    // TODO: implement setIcons
-  }
 
   @override
   void draw(Canvas canvas) {
     canvas.save();
 
-    canvas.translate(tabletop.x ?? 0, tabletop.y ?? 0);
+    canvas.translate(size.width / 2, size.height / 2); // todo maybe change to 0
     canvas.rotate(rotation * math.pi / 180);
-    canvas.translate(-(tabletop.x ?? 0), -(tabletop.y ?? 0));
+    canvas.translate(-(size.width / 2), -(size.height / 2));
 
     final DeskState state =
         stateType == StateType.active ? states.active : states.main;
 
-    tabletop.draw(canvas, state);
-    chair.draw(canvas, state);
+    final Paint deskPaint = Paint()
+      ..color = state.fillColor
+      ..style = PaintingStyle.fill;
+
+    // y - commontabletopHeight + 4 = aligned as in web version
+    RRect tabletopShape = RRect.fromRectAndRadius(
+      Offset(x, y) &
+          const Size(commonTabletopWidth, (commonTabletopHeight - borderWidth)),
+      const Radius.circular(deskBorderRadius),
+    );
+
+    canvas.drawRRect(tabletopShape, deskPaint);
+    final Paint chairPaint = Paint()
+      ..color = state.fillColor
+      ..style = PaintingStyle.fill;
+
+    final chairX = x + commonTabletopSize.width / 2 - deskChairSize.width / 2;
+    final chairY = y + commonTabletopSize.height + 2;
+
+    RRect chairShape = RRect.fromRectAndCorners(
+      Offset(chairX, chairY) & deskChairSize,
+      bottomLeft: const Radius.circular(deskBorderRadius),
+      bottomRight: const Radius.circular(deskBorderRadius),
+    );
+
+    canvas.drawRRect(chairShape, chairPaint);
 
     canvas.restore();
   }
@@ -151,17 +109,9 @@ class Desk extends BaseGraphic implements DeskInterface {
       y ?? this.y,
       rotation: rotation ?? this.rotation,
       states: states ?? this.states,
-      // availability: availability ?? this.availability,
-      chair: chair ?? this.chair,
       coordinates: coordinates ?? this.coordinates,
-      // deskName: deskName ?? this.deskName,
-      // icon: icon ?? this.icon,
-      isSimplified: isSimplified ?? this.isSimplified,
       size: size ?? this.size,
       stateType: stateType ?? this.stateType,
-      tabletop: tabletop ?? this.tabletop,
-      type: type ?? this.type,
-      // icons: icons ?? this.icons,
     );
   }
 }

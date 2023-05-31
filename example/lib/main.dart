@@ -86,6 +86,22 @@ class _MyHomeViewState extends State<_MyHomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: lastModifiedObject != null
+            ? Slider.adaptive(
+                value: lastModifiedObject!.area.rotation / 1500,
+                activeColor: Colors.black,
+                onChanged: (double value) {
+                  // TODO fix tapping after rotation
+                  final angle = double.parse(value.toStringAsFixed(2)) * 1500;
+                  if (angle != lastModifiedObject!.area.rotation) {
+                    lastModifiedObject =
+                        lastModifiedObject!.copyWith(rotation: angle);
+                    setState(() {});
+                  }
+                },
+                max: 0.24,
+              )
+            : null,
         actions: [
           InkWell(
             onTap: () {
@@ -104,7 +120,8 @@ class _MyHomeViewState extends State<_MyHomeView> {
           InkWell(
             onTap: () {
               setState(() {
-                isDraggableDeskShown = true;
+                lastModifiedObject =
+                    DeskPayload(deskParams: const DeskParams(id: '1'));
               });
             },
             child: const AspectRatio(
@@ -124,9 +141,7 @@ class _MyHomeViewState extends State<_MyHomeView> {
           isEditMode: true,
           mapImage: widget.mapImageFile,
           deskParamsList: desks,
-          selectedDesk: isDraggableDeskShown
-              ? DeskPayload(deskParams: const DeskParams(id: '1'))
-              : null,
+          selectedDesk: lastModifiedObject,
           onDeskMoved: (Offset deskPosition) {
             if (kDebugMode) {
               print(

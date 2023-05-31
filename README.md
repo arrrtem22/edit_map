@@ -1,4 +1,4 @@
-# Cached Repository
+# Edit Map
 
 [![pub package](https://img.shields.io/pub/v/edit_map.svg?logo=dart&logoColor=00b9fc)](https://pub.dartlang.org/packages/edit_map)
 [![Last Commits](https://img.shields.io/github/last-commit/arrrtem22/edit_map?logo=git&logoColor=white)](https://github.com/arrrtem22/edit_map/commits/master)

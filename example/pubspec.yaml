@@ -1,6 +1,7 @@
 name: edit_map_example
 description: Demonstrates how to use the edit_map plugin.
 publish_to: 'none'
+version: 0.0.1
 
 environment:
   sdk: '>=2.19.6 <3.0.0'
