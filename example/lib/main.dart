@@ -45,7 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final raf = file.openSync(mode: FileMode.write);
     raf.writeFromSync(response.data);
     await raf.close();
-    return file;
+    return Future.value(file);
   }
 
   @override
