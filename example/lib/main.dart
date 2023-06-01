@@ -105,13 +105,11 @@ class _MyHomeViewState extends State<_MyHomeView> {
         actions: [
           InkWell(
             onTap: () {
-              setState(() {
-                if (lastModifiedObject != null) {
-                  desks = desks.toList()..add(lastModifiedObject!);
-                  lastModifiedObject = null;
-                }
-                isDraggableDeskShown = false;
-              });
+              if (lastModifiedObject != null) {
+                desks = desks.toList()..add(lastModifiedObject!);
+                lastModifiedObject = null;
+                setState(() {});
+              }
             },
             child: const Center(
               child: Text('Save'),
@@ -119,10 +117,9 @@ class _MyHomeViewState extends State<_MyHomeView> {
           ),
           InkWell(
             onTap: () {
-              setState(() {
-                lastModifiedObject =
-                    DeskPayload(deskParams: const DeskParams(id: '1'));
-              });
+              lastModifiedObject =
+                  DeskPayload(deskParams: DeskParams(id: (index++).toString()));
+              setState(() {});
             },
             child: const AspectRatio(
               aspectRatio: 1,
@@ -149,12 +146,8 @@ class _MyHomeViewState extends State<_MyHomeView> {
             }
             WidgetsBinding.instance.addPostFrameCallback((_) async {
               setState(() {
-                lastModifiedObject = DeskPayload(
-                  deskParams: DeskParams(
-                    id: (++index).toString(),
-                    area: Area(position: deskPosition),
-                  ),
-                );
+                lastModifiedObject =
+                    lastModifiedObject?.copyWith(position: deskPosition);
               });
             });
           },

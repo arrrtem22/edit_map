@@ -6,6 +6,11 @@
 [![Code size](https://img.shields.io/github/languages/code-size/arrrtem22/edit_map?logo=github&logoColor=white)](https://github.com/arrrtem22/edit_map)
 [![License](https://img.shields.io/github/license/arrrtem22/edit_map?logo=open-source-initiative&logoColor=green)](https://github.com/arrrtem22/edit_map/blob/master/LICENSE)
 
+<p align="center">
+  <img src="https://github.com/arrrtem22/edit_map/blob/master/images/showcase.gif?raw=true" height="600px">
+</p>
+
+
 The map that allows users to interact with various 2-dimensional shapes.<br>
 Inspired by [FlutterGallery 2D Transformations](https://github.com/flutter/gallery/blob/6fa29dc0d1ba496b6858b07c4465757e2025f548/lib/demos/reference/transformations_demo.dart).
 
