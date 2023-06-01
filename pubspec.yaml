@@ -3,7 +3,7 @@ description: The map which allows your users to interact with 2D objects.
 homepage: https://pub.dev/packages/edit_map
 repository: https://github.com/arrrtem22/edit_map/
 issue_tracker: https://github.com/arrrtem22/edit_map/issues
-version: 0.0.2
+version: 0.0.3
 
 dependencies:
   flutter:

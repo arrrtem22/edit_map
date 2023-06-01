@@ -2,24 +2,21 @@ import 'dart:io';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
-import 'package:edit_map/src/src/models/graphic/params/desk_params.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:edit_map/src/src/builders/graphic/desk_builder.dart';
 import 'package:edit_map/src/src/map_values.dart';
 import 'package:edit_map/src/src/models/graphic/base_graphic.dart';
 import 'package:edit_map/src/src/models/graphic/desk/desk_values.dart';
 import 'package:edit_map/src/src/models/graphic/office_map.dart';
+import 'package:edit_map/src/src/models/graphic/params/desk_params.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 export 'package:edit_map/src/src/models/graphic/params/desk_params.dart';
 
-const logsEnabled = true;
+const _logsEnabled = true;
 
 /// Draw container with black border around draggable desk.
-const double draggableDeskPadding = 50;
-
-/// Size of icon that a user sees in edit mode with draggable desk.
-const fourDirectionArrowIconSize = Size(18, 18);
+const double _draggableDeskPadding = 50;
 
 class EditMap extends StatefulWidget {
   final File mapImage;
@@ -41,7 +38,7 @@ class EditMap extends StatefulWidget {
     this.selectedDesk,
     this.onDeskMoved,
     this.background = Colors.white,
-    this.backgroundWithDraggableObject = Colors.red,
+    this.backgroundWithDraggableObject = defaultFillColor,
     this.onObjectSelected,
     this.isEditMode = false,
   }) : super(key: key);
@@ -120,9 +117,9 @@ class EditMapState extends State<EditMap> with TickerProviderStateMixin {
         } else {
           draggableDeskPosition = Offset(
             widget.selectedDesk!.area.position!.dx * officeMap!.ratio -
-                draggableDeskPadding,
+                _draggableDeskPadding,
             widget.selectedDesk!.area.position!.dy * officeMap!.ratio -
-                draggableDeskPadding,
+                _draggableDeskPadding,
           );
         }
         officeMap = officeMap!.clearSelection();
@@ -185,8 +182,8 @@ class EditMapState extends State<EditMap> with TickerProviderStateMixin {
         );
 
         final draggableDeskInitialPosition = Offset(
-          mapImage.width / 2 * officeMap.ratio - draggableDeskPadding,
-          mapImage.height / 2 * officeMap.ratio - draggableDeskPadding,
+          mapImage.width / 2 * officeMap.ratio - _draggableDeskPadding,
+          mapImage.height / 2 * officeMap.ratio - _draggableDeskPadding,
         );
 
         setState(() {
@@ -296,7 +293,7 @@ class EditMapState extends State<EditMap> with TickerProviderStateMixin {
 
   void onDeskMoved(Offset offset, {bool needToSetState = false}) {
     final deskTopLeftPoint = convertOffset(
-        offset + const Offset(draggableDeskPadding, draggableDeskPadding));
+        offset + const Offset(_draggableDeskPadding, _draggableDeskPadding));
     final deskInDraggableWrapperTopLeftPoint = convertOffset(offset);
 
     if (deskTopLeftPoint.dy > 0 &&
@@ -344,7 +341,7 @@ class _DraggableDeskWidget extends StatelessWidget {
           -commonDeskSize.height * officeMap!.ratio / 2),
       angle: rotation * math.pi / 180,
       child: Container(
-        padding: const EdgeInsets.all(draggableDeskPadding),
+        padding: const EdgeInsets.all(_draggableDeskPadding),
         decoration: BoxDecoration(border: Border.all()),
         child: Column(
           children: [
@@ -403,4 +400,4 @@ class MapPainter extends CustomPainter {
 }
 
 // ignore: avoid_print
-_print(Object? object) => logsEnabled ? print(object) : null;
+_print(Object? object) => _logsEnabled ? print(object) : null;
