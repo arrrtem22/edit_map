@@ -76,7 +76,6 @@ class _MyHomeView extends StatefulWidget {
 }
 
 class _MyHomeViewState extends State<_MyHomeView> {
-  bool isDraggableDeskShown = false;
   List<DeskPayload> desks = [];
   DeskPayload? lastModifiedObject;
 
@@ -103,18 +102,19 @@ class _MyHomeViewState extends State<_MyHomeView> {
               )
             : null,
         actions: [
-          InkWell(
-            onTap: () {
-              if (lastModifiedObject != null) {
-                desks = desks.toList()..add(lastModifiedObject!);
-                lastModifiedObject = null;
-                setState(() {});
-              }
-            },
-            child: const Center(
-              child: Text('Save'),
+          if (lastModifiedObject != null)
+            InkWell(
+              onTap: () {
+                if (lastModifiedObject != null) {
+                  desks = desks.toList()..add(lastModifiedObject!);
+                  lastModifiedObject = null;
+                  setState(() {});
+                }
+              },
+              child: const Center(
+                child: Text('Save'),
+              ),
             ),
-          ),
           InkWell(
             onTap: () {
               lastModifiedObject =

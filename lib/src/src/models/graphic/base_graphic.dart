@@ -28,9 +28,11 @@ abstract class BaseGraphic implements ObjectInterface {
       Offset(topLeft.dx, topLeft.dy + commonDeskSize.height),
     ];
 
+    final center = determinateRectCenter(shape);
+
     return rotation == 0
         ? shape
-        : shape.map((e) => rotatePoint(e, shape.first, rotation)).toList();
+        : shape.map((e) => rotatePoint(e, center, rotation)).toList();
   }
 
   Size getSize() {

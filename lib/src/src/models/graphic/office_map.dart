@@ -103,20 +103,6 @@ class OfficeMap extends Object with IterableMixin<BaseGraphic> {
   // the center of the board in both coordinate systems. If no BoardPoint at the
   // location, return null.
   BaseGraphic? determinateSelectedObject(Offset offset) {
-    // final pointCentered = Offset(
-    //   point.dx - size.width / 2,
-    //   point.dy - size.height / 2,
-    // );
-    // final boardPoint = ObjectInterface(
-    //   ((sqrt(3) / 3 * pointCentered.dx - 1 / 3 * pointCentered.dy) /
-    //       hexagonRadius)
-    //       .round(),
-    //   ((2 / 3 * pointCentered.dy) / hexagonRadius).round(),
-    // );
-
-    // if (!_validateBoardPoint(boardPoint)) {
-    //   return null;
-    // }
     Offset point = Offset(offset.dx, offset.dy);
     BaseGraphic? selectedGraphic;
     for (final object in _mapObjects) {

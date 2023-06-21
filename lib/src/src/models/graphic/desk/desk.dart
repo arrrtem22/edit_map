@@ -46,9 +46,9 @@ class Desk extends BaseGraphic {
   void draw(Canvas canvas) {
     canvas.save();
 
-    canvas.translate(x, y);
+    canvas.translate(x + (size.width / 2), y + (size.height / 2));
     canvas.rotate(rotation * math.pi / 180);
-    canvas.translate(-(x), -(y));
+    canvas.translate(-(x + (size.width / 2)), -(y + (size.height / 2)));
 
     final DeskState state =
         stateType == StateType.active ? states.active : states.main;
