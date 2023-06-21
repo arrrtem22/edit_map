@@ -20,7 +20,7 @@ class DeskBuilder {
       params.area.position!.dy,
       rotation: params.area.rotation,
       stateType: StateType.main,
-      size: commonTabletopSize,
+      size: commonDeskSize,
       states: Params(
         params.isBooked ? bookedDeskState : defaultDeskState,
         activeDeskState,

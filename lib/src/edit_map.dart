@@ -337,8 +337,6 @@ class _DraggableDeskWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Transform.rotate(
-      origin: Offset(-commonDeskSize.width * officeMap!.ratio / 2,
-          -commonDeskSize.height * officeMap!.ratio / 2),
       angle: rotation * math.pi / 180,
       child: Container(
         padding: const EdgeInsets.all(_draggableDeskPadding),
